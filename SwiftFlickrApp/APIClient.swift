@@ -33,7 +33,7 @@ class APIClient {
             var innerError: NSError? = error
             failure(error: &innerError)
         }
-        SVProgressHUD.show()
+        
         self.manager.GET(url, parameters: parameters, success: requestSuccess, failure: requestFailure)
     }
 }
