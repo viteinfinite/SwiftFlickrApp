@@ -20,7 +20,8 @@ class ViewController: UICollectionViewController
     var layoutType = LayoutType.Grid
     var apiClient:APIClient
     
-    init(coder aDecoder: NSCoder!) {
+    init(coder aDecoder: NSCoder!)
+    {
         self.apiClient = APIClient()
         super.init(coder: aDecoder)        
     }
@@ -39,11 +40,8 @@ class ViewController: UICollectionViewController
             NSLog("requestFailure: \(error)")
         })
     }
-
-    override func didReceiveMemoryWarning()
-    {
-        super.didReceiveMemoryWarning()
-    }
+    
+    // MARK: - Collection View
     
     override func collectionView(collectionView: UICollectionView!, numberOfItemsInSection section: Int) -> Int
     {
@@ -89,6 +87,8 @@ class ViewController: UICollectionViewController
         return itemSize
     }
     
+    // MARK: - IBAction
+    
     @IBAction func segmentedControlDidChanged(control : UISegmentedControl)
     {
         switch control.selectedSegmentIndex {
@@ -103,6 +103,8 @@ class ViewController: UICollectionViewController
         self.collectionView.reloadData()
     }
     
+    // MARK: - Segue
+
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!)
     {
         if segue.identifier == "ShowPhoto"
