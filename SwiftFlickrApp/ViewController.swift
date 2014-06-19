@@ -29,16 +29,23 @@ class ViewController: UICollectionViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.apiClient.getFlickrPhotos({
-            photos in
-            self.photos = photos
-            SVProgressHUD.dismiss()
-            self.collectionView.reloadData()
-        }, {
-            error in
-            SVProgressHUD.dismiss()
-            NSLog("requestFailure: \(error)")
-        })
+        
+        SVProgressHUD.show()
+        
+        // -> 2 <-
+        // @TODO
+        // Use apiClient to retrieve the photos
+        // if the loading succeeds: 
+        //   1. set the self.photos dictionary to the received response
+        //   2. dismiss the progress HUD
+        //   3. reload the collection view
+        // if the loading fails:
+        //   1. dismiss the progress HUD
+        
+        
+        
+        // Your code goes here
+
     }
     
     // MARK: - Collection View
@@ -50,42 +57,55 @@ class ViewController: UICollectionViewController
     
     override func collectionView(collectionView: UICollectionView!, cellForItemAtIndexPath indexPath: NSIndexPath!) -> UICollectionViewCell!
     {
-        let photoCell: PhotoCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("PhotoCell", forIndexPath: indexPath) as PhotoCell
-        let photoInfo = photos[indexPath.item] as Dictionary
-
-        photoCell.photoInfo = photoInfo
-        return photoCell;
+        var photoCell:PhotoCell
+        
+        // -> 1 <-
+        // @TODO
+        // 0. Remove "return nil" on the bottom of this function
+        // 1. Dequeue the cell using dequeueReusableCellWithReuseIdentifier
+        // 2. Retrieve the item at the required index (indexPath.item) from the photo dictionary
+        // 3. Set the photoInfo property on photoCell
+        // 4. Return photoCell
+        
+        
+        // Your code goes here
+        
+        
+        // Remove me
+        return nil
     }
     
     func collectionView(collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, sizeForItemAtIndexPath indexPath: NSIndexPath!) -> CGSize
     {
         var itemSize : CGSize
-        if self.layoutType == LayoutType.Grid
-        {
+        if self.layoutType == LayoutType.Grid {
             itemSize = (indexPath.item%3 == 1) ? CGSizeMake(106, 106) : CGSizeMake(107, 106)
-        }
-        else
-        {
+        } else {
             itemSize = CGSizeMake(320, 150)
         }
         return itemSize
     }
     
+    
     // MARK: - IBAction
     
     @IBAction func segmentedControlDidChange(control : UISegmentedControl)
     {
-        switch control.selectedSegmentIndex {
-        case 0:
-            self.layoutType = LayoutType.Grid
-        case 1:
-            self.layoutType = LayoutType.List
-        default:
-            self.layoutType = LayoutType.Grid
-        }
+        // -> 3 <-
+        // @TODO
+        // Implement the switch statement and set "self.layoutType" according to the choice:
+        // 0 and default should set self.layoutType to Grid
+        // 1 should set self.layoutType to List
+        
+        
+        
+        // Your code goes here
+        
+        
         
         self.collectionView.reloadData()
     }
+    
     
     // MARK: - Segue
 
