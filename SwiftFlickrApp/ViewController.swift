@@ -18,47 +18,32 @@ class ViewController: UICollectionViewController
 {
     var photos:Dictionary<String, String>[] = []
     var layoutType = LayoutType.Grid
+    var apiClient:APIClient
+    
+    init(coder aDecoder: NSCoder!) {
+        self.apiClient = APIClient()
+        super.init(coder: aDecoder)        
+    }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        getFlickrPhotos()
+        self.apiClient.getFlickrPhotos({
+            photos in
+            self.photos = photos
+            SVProgressHUD.dismiss()
+            self.collectionView.reloadData()
+        }, {
+            error in
+            SVProgressHUD.dismiss()
+            NSLog("requestFailure: \(error)")
+        })
     }
 
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
     }
-    
-    func getFlickrPhotos()
-    {
-        let manager :AFHTTPRequestOperationManager = AFHTTPRequestOperationManager()
-        let url :String = "https://api.flickr.com/services/rest/"
-        let parameters :Dictionary = [
-            "method"         : "flickr.interestingness.getList",
-            "api_key"        : "86997f23273f5a518b027e2c8c019b0f",
-            "per_page"       : "99",
-            "format"         : "json",
-            "nojsoncallback" : "1",
-            "extras"         : "url_q,url_z",
-        ]
-        let requestSuccess = {
-            (operation :AFHTTPRequestOperation!, responseObject :AnyObject!) -> Void in
-            SVProgressHUD.dismiss()
-            self.photos = responseObject.objectForKey("photos").objectForKey("photo") as Array
-            self.collectionView.reloadData()
-            NSLog("requestSuccess \(responseObject)")
-        }
-        let requestFailure = {
-            (operation :AFHTTPRequestOperation!, error :NSError!) -> Void in
-            SVProgressHUD.dismiss()
-            NSLog("requestFailure: \(error)")
-        }
-        SVProgressHUD.show()
-        manager.GET(url, parameters: parameters, success: requestSuccess, failure: requestFailure)
-    }
-    
-    // MARK: - UICollectionView
     
     override func collectionView(collectionView: UICollectionView!, numberOfItemsInSection section: Int) -> Int
     {
