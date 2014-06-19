@@ -63,7 +63,7 @@
                                 <segment title="List"/>
                             </segments>
                             <connections>
-                                <action selector="segmentedControlDidChanged:" destination="lgq-5A-63J" eventType="valueChanged" id="c5M-uA-LYf"/>
+                                <action selector="segmentedControlDidChange:" destination="lgq-5A-63J" eventType="valueChanged" id="Zbo-xP-bmT"/>
                             </connections>
                         </segmentedControl>
                     </navigationItem>

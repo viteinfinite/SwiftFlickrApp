@@ -52,22 +52,6 @@ class ViewController: UICollectionViewController
     {
         let photoCell: PhotoCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("PhotoCell", forIndexPath: indexPath) as PhotoCell
         let photoInfo = photos[indexPath.item] as Dictionary
-        let photoUrlString = (self.layoutType == LayoutType.Grid) ? photoInfo["url_q"] : photoInfo["url_z"]
-        let photoUrlRequest : NSURLRequest = NSURLRequest(URL: NSURL.URLWithString(photoUrlString))
-        
-        let imageRequestSuccess = {
-            (request : NSURLRequest!, response : NSHTTPURLResponse!, image : UIImage!) -> Void in
-            photoCell.photoImageView.image = image;
-            photoCell.photoImageView.alpha = 0
-            UIView.animateWithDuration(0.2, animations: {
-                    photoCell.photoImageView.alpha = 1.0
-            })
-        }
-        let imageRequestFailure = {
-            (request : NSURLRequest!, response : NSHTTPURLResponse!, error : NSError!) -> Void in
-            NSLog("imageRequrestFailure")
-        }
-        photoCell.photoImageView.setImageWithURLRequest(photoUrlRequest, placeholderImage: nil, success: imageRequestSuccess, failure: imageRequestFailure)
 
         photoCell.photoInfo = photoInfo
         return photoCell;
@@ -89,7 +73,7 @@ class ViewController: UICollectionViewController
     
     // MARK: - IBAction
     
-    @IBAction func segmentedControlDidChanged(control : UISegmentedControl)
+    @IBAction func segmentedControlDidChange(control : UISegmentedControl)
     {
         switch control.selectedSegmentIndex {
         case 0:
